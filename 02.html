@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_类式组件</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="./js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="./js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="./js/babel.min.js"></script>
+
+	<script type="text/babel">
+    // 注意 extends React.Component 与render()必需有 构造器不是必须的
+    class MyComponent extends React.Component{
+      // 有状态组件 的格式如下 构造器是用来初始化状态的
+      constructor(props){
+        super(props);
+        this.state = {temperature:'hot', windy: true};//对象
+        this.changeWeather = this.cWeather.bind(this);
+      }
+      render(){
+        // render是放在哪里的？—— MyComponent的原型对象上  prototype，供实例使用。
+        console.log('render');
+        const {temperature,  windy} = this.state;//解构赋值
+        return <h2 onClick = {this.changeWeather}>today is {temperature}, {windy? 'windy':'not windy'}</h2>
+      }
+      //这是类 MyComponent 中定义的方法 注意类中调用其它方法必须用this.方法
+			// 基本作为回调函数使用的
+      cWeather(){
+        console.log('changeWeather');
+        if (this.state.temperature ==='hot'){
+          this.setState({temperature:'cold'})
+        }else{
+          this.setState({temperature:'hot'})
+        }
+        this.setState({windy:!this.state.windy})
+
+      }
+
+    }
+    ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+		//1.创建类式组件
+		// class MyComponent extends React.Component {
+		// 	render(){
+		// 		//render是放在哪里的？—— MyComponent的原型对象上，供实例使用。
+		// 		//render中的this是谁？—— MyComponent的实例对象 <=> MyComponent组件实例对象。
+		// 		console.log('render中的this:',this);
+		// 		return <h2>我是用类定义的组件(适用于【复杂组件】的定义)</h2>
+		// 	}
+		// }
+		//2.渲染组件到页面
+		// ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+		/*
+			执行了ReactDOM.render(<MyComponent/>.......之后，发生了什么？
+					1.React解析组件标签，找到了MyComponent组件。
+					2.发现组件是使用类定义的，随后new出来该类的实例，并通过该实例调用到原型上的render方法。
+					3.将render返回的虚拟DOM转为真实DOM，随后呈现在页面中。
+		*/
+    // 函数组件的实例的三大属性 props refs state
+    // 有状态的叫复杂组件
+
+	</script>
+</body>
+</html>

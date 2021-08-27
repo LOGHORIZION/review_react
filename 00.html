@@ -7,6 +7,60 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <!--
+    2.	虚拟DOM对象最终都会被React转换为真实的DOM
+    1.3.2. JSX 1.	全称:  JavaScript XML
+    2.	react定义的一种类似于XML的JS扩展语法: JS + XML本质是
+    3.	作用: 用来简化创建虚拟DOM
+  1)	写法：var ele = <h1>Hello JSX!</h1>
+    2)	注意1：它不是字符串, 也不是HTML/XML标签
+    3)	注意2：它最终产生的就是一个JS对象
+    7.	babel.js的作用
+    1)	浏览器不能直接解析JSX代码, 需要babel转译为纯JS的代码才能运行
+    2)	只要用了JSX，都要加上type="text/babel", 声明需要babel来处理
+
+    1.3.3. 渲染虚拟DOM(元素)
+    1.	语法:  ReactDOM.render(virtualDOM, containerDOM)
+    2.	作用: 将虚拟DOM元素渲染到页面中的真实容器DOM中显示
+    3.	参数说明
+    1)	参数一: 纯js或jsx创建的虚拟dom对象
+    2)	参数二: 用来包含虚拟DOM元素的真实dom元素对象(一般是一个div)
+    jsx语法规则：
+						1.定义虚拟DOM时，不要写引号。
+						2.标签中混入JS表达式时要用{}。
+						3.样式的类名指定不要用class，要用className。
+						4.内联样式，要用style={{key:value}}的形式去写。
+						5.只有一个根标签
+						6.标签必须闭合
+						7.标签首字母
+								(1).若小写字母开头，则将该标签转为html中同名元素，若html中无该标签对应的同名元素，则报错。
+								(2).若大写字母开头，react就去渲染对应的组件，若组件没有定义，则报错。
+   -->
+
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+  	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="./js/react.development.js"></script>
+  <!-- 引入react-dom，用于支持react操作DOM -->
+  <script type="text/javascript" src="./js/react-dom.development.js"></script>
+  <!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="./js/babel.min.js"></script>
+  <script type="text/babel" > /* 此处一定要写babel */
+		//1.创建虚拟DOM
+	  const vDom = <h1> hello react </h1>  /* 此处一定不要写引号，因为不是字符串 */
+    // 内联样式，要用style={{key:value}}的形式去写。
+    // style='width:300px,height:300px,border: black 1px'
+    const vDom2 = <div style={{width:'300px', height:'300px',color:'red',border: 'black 1px solid',
+      'box-shadow':'0 0 0 10px grey'}} >
+      <h1>前端框架列表</h1>
+        <ul>
+        <li>Angular</li>
+        <li>React</li>
+        <li>Vue</li>
+      </ul>
+    </div>
+		//2.渲染虚拟DOM到页面
+    ReactDOM.render(vDom2, document.getElementById('test'))
+	</script>
 </body>
 </html>
